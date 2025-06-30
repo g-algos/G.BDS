@@ -4,10 +4,24 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<Version>1.0.0</Version>
+	<Version>1.0.1</Version>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageId>G.bds</PackageId>
+	<Authors>Amilcar Ferreira</Authors>
+	<Company>etc-tec</Company>
+	<Description>Facilitates the creation and management of BDS (Building Data Share) files, enabling teams to define and share standardized data schedule layouts for extracting structured tables from IFC models.</Description>
+	<PackageTags>BIM;IFC</PackageTags>
+	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	<PackageProjectUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageProjectUrl>
   </PropertyGroup>
 
 	<ItemGroup>
-		<Using Include="System.Xml.Serialization"/>
+		<Using Include="System.Xml.Serialization" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="BDS.1.0.xsd">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

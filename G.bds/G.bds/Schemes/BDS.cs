@@ -5,16 +5,16 @@ namespace G.bds.Schemes;
 [XmlRoot("BDS")]
 public class BDS
 {
-    private double _version;
+    private string _version;
 
     [XmlAttribute("Version")]
-    public double Version
+    public string Version
     {
         get => _version;
         set
         {
             Version v = Assembly.GetExecutingAssembly().GetName().Version!;
-            _version = v.Major + v.Minor / 10;
+            _version = $"{v.Major}.{v.Minor}";
         }
     }
 

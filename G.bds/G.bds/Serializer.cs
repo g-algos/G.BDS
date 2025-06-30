@@ -38,7 +38,7 @@ public static class Serializer
     public static void Save(Schemes.BDS bds, string outputPath, string outputfileName)
     {
         string xmlCrs = Serialize(bds);
-        string resultPath = Path.Combine(outputPath, outputfileName, ".crs");
+        string resultPath = Path.Combine(outputPath, $"{outputfileName}.bds");
         File.WriteAllText(resultPath, xmlCrs);
     }
 
@@ -71,9 +71,9 @@ public static class Serializer
 
     private static void ValidateXmlAgainstXsd(string xmlContent)
     {
-        string xsdSchemaPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "BDS.1.0.xsd");
+        string xsdSchemaPath = "BDS.1.0.xsd";
         XmlSchemaSet schemaSet = new();
-        schemaSet.Add("https://g-algo/standards/schemas/bds.1.0", xsdSchemaPath);
+        schemaSet.Add("https://g-algos.com/standards/schemas/bds.1.0", xsdSchemaPath);
 
         XmlReaderSettings settings = new();
         settings.Schemas.Add(schemaSet);

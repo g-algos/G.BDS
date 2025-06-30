@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema targetNamespace="https://g_algos.com/standards/schemas/bds.1.0"
+<xs:schema targetNamespace="https://g-algos.com/standards/schemas/bds.1.0"
     elementFormDefault="qualified"
-    xmlns="https://g_algos.com/standards/schemas/bds.1.0"
-    xmlns:mstns="https://g_algos.com/standards/schemas/bds.1.0"
+    xmlns="https://g-algos.com/standards/schemas/bds.1.0"
+    xmlns:mstns="https://g-algos.com/standards/schemas/bds.1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	
 <!-- Comparison Operator enum-->
@@ -146,7 +146,7 @@
 	  </xs:element>
       <xs:element minOccurs="0" maxOccurs="1" name="ResponsibleParty" type="xs:string" />
     </xs:sequence>
-    <xs:attribute name="Version" type="xs:double" use="required" />
+    <xs:attribute name="Version" type="xs:string" use="required" />
     <xs:attribute name="Name" type="xs:string" />
   </xs:complexType>
  
