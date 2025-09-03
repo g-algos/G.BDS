@@ -119,7 +119,6 @@
 	<xs:complexType name="ScheduleSet">
 		<xs:sequence>
 			<xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
-			<xs:element minOccurs="0" maxOccurs="1" name="Group" type="xs:string" />
 			<xs:element minOccurs="0" maxOccurs="1" name="Discipline" type="xs:string" />
 			<xs:element name="Schedules" minOccurs="0" maxOccurs="unbounded" nillable="true">
 				<xs:complexType>

@@ -45,35 +45,46 @@ public static class Serializer
     /// <summary>
     /// Deserialize bds string back to BDS object
     /// </summary>
-    /// <param name="bds">bds string to deserialize</param>
+    /// <param name="filePath">bds file path to deserialize</param>
     /// <returns>Deserialized BDS object</returns>
-    public static Schemes.BDS Deserialize(string bds)
+    public static Schemes.BDS Deserialize(string filePath)
     {
         try
         {
-            ValidateXmlAgainstXsd(bds);
+            string xmlContent = File.ReadAllText(filePath); // Lê o conteúdo do ficheiro
+
+            ValidateXmlAgainstXsd(xmlContent); // Valida antes de continuar
 
             var serializer = new XmlSerializer(typeof(Schemes.BDS));
-            using var reader = new StringReader(bds);
-            return (Schemes.BDS)serializer.Deserialize(reader)!; // Deserialize the XML back to BDS object
+            using var reader = new StringReader(xmlContent);
+            return (Schemes.BDS)serializer.Deserialize(reader)!;
         }
         catch (InvalidOperationException ex)
         {
-            // Log or handle deserialization specific errors
-            throw new InvalidOperationException("Error occurred while deserializing the XML string.", ex);
+            throw new InvalidOperationException("Error occurred while deserializing the XML file.", ex);
         }
         catch (Exception ex)
         {
-            // Log or handle any unexpected errors
             throw new Exception("An unexpected error occurred during deserialization.", ex);
         }
     }
 
+
     private static void ValidateXmlAgainstXsd(string xmlContent)
     {
-        string xsdSchemaPath = "BDS.1.0.xsd";
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = assembly
+            .GetManifestResourceNames()
+            .FirstOrDefault(r => r.EndsWith("BDS.1.0.xsd"));
+
+        if (resourceName == null)
+            throw new FileNotFoundException("Embedded XSD resource not found.");
+
+        using Stream xsdStream = assembly.GetManifestResourceStream(resourceName)!;
+        using XmlReader xsdReader = XmlReader.Create(xsdStream);
+
         XmlSchemaSet schemaSet = new();
-        schemaSet.Add("https://g-algos.com/standards/schemas/bds.1.0", xsdSchemaPath);
+        schemaSet.Add("https://g-algos.com/standards/schemas/bds.1.0", xsdReader);
 
         XmlReaderSettings settings = new();
         settings.Schemas.Add(schemaSet);

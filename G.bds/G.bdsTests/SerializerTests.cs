@@ -16,7 +16,6 @@ public class SerializerTests
                     new ScheduleSet(
                         name: "Architecture Set",
                         description: "Walls and doors",
-                        group: "A01",
                         discipline: "Architecture",
                         schedules: new[]
                         {
@@ -65,17 +64,17 @@ public class SerializerTests
     [TestMethod()]
     public void SerializeTest()
     {
-       
 
         var result = Serializer.Serialize(_bds);
         Console.Write(result);
         Assert.IsNotNull(result);
     }
 
+    private string directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     [TestMethod()]
     public void SaveTest()
     {
-        var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        
         Serializer.Save(_bds, directory!, "test");
         Assert.IsTrue(File.Exists(Path.Combine(directory!, $"test.bds")));
     }
@@ -86,7 +85,7 @@ public class SerializerTests
         string crsXml = "<BDS>...</BDS>"; // A sample BDS XML string
 
         // Act
-        var result = Serializer.Deserialize(crsXml);
+        var result = Serializer.Deserialize(Path.Combine(directory!, $"test.bds"));
 
         // Assert
         Assert.IsNotNull(result);

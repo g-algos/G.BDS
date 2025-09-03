@@ -15,13 +15,17 @@
 	<PackageProjectUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageProjectUrl>
   </PropertyGroup>
 
-	<ItemGroup>
-		<Using Include="System.Xml.Serialization" />
-	</ItemGroup>
+  <ItemGroup>
+    <None Remove="BDS.1.0.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BDS.1.0.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 
 	<ItemGroup>
-	  <None Update="BDS.1.0.xsd">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<Using Include="System.Xml.Serialization" />
 	</ItemGroup>
 </Project>

@@ -8,10 +8,6 @@ public class ScheduleSet
     public string? Description { get; set; }
     public bool ShouldSerializeDescription() => Description != null && Description.Any();
 
-    [XmlElement("Group")]
-    public string? Group { get; set; }
-    public bool ShouldSerializeGroup() => Group != null && Group.Any();
-
     [XmlElement("Discipline")]
     public string? Discipline { get; set; }
     public bool ShouldSerializeDiscipline() => Discipline != null && Discipline.Any();
@@ -20,7 +16,7 @@ public class ScheduleSet
     [XmlArrayItem("Schedule")]
     public Schedule[]? Schedules { get; set; }
 
-    public ScheduleSet(string name, string? description, string? group, string? discipline, Schedule[]? schedules)
+    public ScheduleSet(string name, string? description,string? discipline, Schedule[]? schedules)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -28,7 +24,6 @@ public class ScheduleSet
         }
         Name = name;
         Description = description;
-        Group = group;
         Discipline = discipline;
         Schedules = schedules;
     }
