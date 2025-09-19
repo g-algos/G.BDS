@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="https://g-algos.com/standards/schemas/bds.1.0"
+    elementFormDefault="qualified"
+    xmlns="https://g-algos.com/standards/schemas/bds.1.0"
+    xmlns:mstns="https://g-algos.com/standards/schemas/bds.1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+<!-- Comparison Operator enum-->
+	<xs:simpleType name="ComparisonOperator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Equal" />
+			<xs:enumeration value="NotEqual" />
+			<xs:enumeration value="In" />
+			<xs:enumeration value="NotIn" />
+			<xs:enumeration value="StartsWith" />
+			<xs:enumeration value="EndsWith" />
+			<xs:enumeration value="GreaterThan" />
+			<xs:enumeration value="GreaterThanOrEqual" />
+			<xs:enumeration value="LessThan" />
+			<xs:enumeration value="LessThanOrEqual" />
+			<xs:enumeration value="Between" />
+			<xs:enumeration value="NotBetween" />
+			<xs:enumeration value="MatchesRegex" />
+			<xs:enumeration value="IsNull" />
+			<xs:enumeration value="IsNotNull" />
+			<xs:enumeration value="ApproximatelyEqual" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Order enum -->
+	<xs:simpleType name="Order">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ascending" />
+			<xs:enumeration value="Descending" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- fields -->
+
+	<xs:complexType name="AttributeField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Attribute" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Formula" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="Id" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="PropertyField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="PropertySetName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="PropertyName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Formula" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="Id" type="xs:string" />
+	</xs:complexType>
+	<!-- Filter-->
+	<xs:complexType name="Filter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Field" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="Operator" type="ComparisonOperator" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Value" />
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Sort -->
+	<xs:complexType name="Sort">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Field" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="Order" type="Order" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Schedule -->
+	<xs:complexType name="Schedule">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
+			<xs:element name="IfcClasses" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="IfcClass" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fields" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="PropertyField" type="PropertyField"/>
+							<xs:element name="AttributeField" type="AttributeField"/>
+						</xs:choice>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Filters" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Condition" type="Filter" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Sort" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Condition" type="Sort" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Group" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="FieldId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" />
+	</xs:complexType>
+
+	<!-- ScheduleSet -->
+	<xs:complexType name="ScheduleSet">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Discipline" type="xs:string" />
+			<xs:element name="Schedules" minOccurs="0" maxOccurs="unbounded" nillable="true">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Schedule" type="Schedule" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" />
+	</xs:complexType>
+
+	<!-- root -->
+  <xs:complexType name="BDS">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FileVersion" type="xs:string" />
+	  <xs:element name="ScheduleSets" minOccurs="0" maxOccurs="unbounded" nillable="true">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="ScheduleSet" type="ScheduleSet" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+	  </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="ResponsibleParty" type="xs:string" />
+    </xs:sequence>
+    <xs:attribute name="Version" type="xs:string" use="required" />
+    <xs:attribute name="Name" type="xs:string" />
+  </xs:complexType>
+ 
+
+</xs:schema>

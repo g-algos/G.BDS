@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Version>1.0.0</Version>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageId>G.bds</PackageId>
+	<Authors>Amilcar Ferreira</Authors>
+	<Company>etc-tec</Company>
+	<Description>Facilitates the creation and management of BDS (Building Data Share) files, enabling teams to define and share standardized data schedule layouts for extracting structured tables from IFC models.</Description>
+	<PackageTags>BIM;IFC;BDS</PackageTags>
+	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	<PackageProjectUrl>https://www.apache.org/licenses/LICENSE-2.0</PackageProjectUrl>
+	<PackageIcon>Galgo_32.png</PackageIcon>
+	<RepositoryUrl>https://github.com/g-algos/G.BDS.git</RepositoryUrl>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="BDS.1.0.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BDS.1.0.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\GSuite\G.wpf\Resources\Galgo_32.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System.Xml.Serialization" />
+	</ItemGroup>
+</Project>
